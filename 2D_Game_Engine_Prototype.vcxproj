@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\ECS.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />
@@ -279,6 +280,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\TransformComponent.h" />
+    <ClInclude Include="src\ECS\ECS.h" />
     <ClInclude Include="src\Logger.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="libs\glm\common.hpp" />
@@ -535,6 +538,7 @@
     <ClInclude Include="libs\lua\luaconf.h" />
     <ClInclude Include="libs\lua\lualib.h" />
     <ClInclude Include="libs\sol\sol.hpp" />
+    <ClInclude Include="src\Systems\MovementSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libs\lua\liblua53.a" />
