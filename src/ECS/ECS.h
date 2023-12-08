@@ -58,20 +58,20 @@ public:
 	void AddEntityToSystem(Entity entity);
 	void RemoveEntityFromSystem(Entity entity);
 	std::vector<Entity> GetSystemEntities() const;
-	Signature& GetComponentSignature() const;
+	const Signature& GetComponentSignature() const;
 
 	// Define the component type T that entities must have to be considered by the system
-	template <typename T> void RequireComponent();
+	template <typename TComponent> void RequireComponent();
 };
 
 class Registry {
 
 };
 
-template <typename T>
+template <typename TComponent>
 void System::RequireComponent() {
-	const auto componentId = Component<T>::GetId();
-	componentSignature.set(componentId)
+	const auto componentId = Component<TComponent>::GetId();
+	componentSignature.set(componentId);
 }
 
 #endif
