@@ -6,12 +6,9 @@
 
 const unsigned int MAX_COMPONENTS = 32;
 
-//////////////////////////////////////////////////////////////////////////////
 // SIGNATURE
-//////////////////////////////////////////////////////////////////////////////
 // Use a bitset (1s and 0s) to keep track of which components an entity has,
 // and also helps keep track of which entities a system is interested in.
-//////////////////////////////////////////////////////////////////////////////
 
 typedef std::bitset<MAX_COMPONENTS> Signature;
 
@@ -37,14 +34,20 @@ private:
 
 public:
 	Entity(int id) : id(id) {};		// initialize member variables directly
+	Entity(const Entity& entity) = default;
 	int GetId() const;
+
+	// Operator overloading for entities:
+	Entity& operator = (const Entity& other) = default;
+	bool operator == (const Entity& other) const { return id == other.id; }
+	bool operator != (const Entity& other) const { return id != other.id; }
+	bool operator > (const Entity& other) const { return id > other.id; }
+	bool operator < (const Entity& other) const { return id < other.id; }
 };
 
-//////////////////////////////////////////////////////////////////////////////
+
 // SYSTEM
-//////////////////////////////////////////////////////////////////////////////
 // The System processes entities that contain a specific component signature
-//////////////////////////////////////////////////////////////////////////////
 
 class System {
 private:
