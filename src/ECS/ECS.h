@@ -1,8 +1,12 @@
 #ifndef ECS_H
 #define ECS_H
 
-#include<bitset>
 #include <vector>
+#include<bitset>
+#include <set>
+#include <unordered_map>
+#include <typeindex>
+
 
 const unsigned int MAX_COMPONENTS = 32;
 
@@ -130,17 +134,42 @@ private:
 	// Keeping track of how many entities were added to the scene
 	int numEntities = 0;
 
+	// Avoid creating or destroying entities in the middle of the game logic by flagging entities 
+	// to be added or removed in the next registry Update()
+	std::set<Entity> entitiesToBeAdded;		// Entities awaiting creation in the next Registry Update()
+	std::set<Entity> entitiesToBeKilled;	// Entities awaiting destruction in the next Registry Update()
+
 	// Vector of component pools
 	// Each pool contains all the data for a certain component type
-	// [vector index = componentId], [pool index = entityId]
+	// [vector index = component type id]
+	// [pool index = entity id]
 	std::vector<IPool*> componentPools;			// default back to parent class for type
 
+	// Vector of component signatures per entity, indicating which component is turned 'on' for a given entity
+	// [Vector index = entity id]
+	std::vector<Signature> entityComponentSignatures;
+
+
+	// Map of active systems [index = system typeId]
+	// Unordered_map can be used since we do not need to keep the elements sored
+	std::unordered_map<std::type_index, System*> systems;
+
 public:
+	Registry() = default;
+
+	// Management of entities
+	void Update();
 	Entity CreateEntity();
-	void KillEntity(Entity entity);
-	void AddSystem();
-	void AddComponent();
-	void RemoveComponent();
+
+	//todo: AddComponent<T>();
+	
+	void AddEntityToSystem(Entity entity);	// add entity to the list of entities inside the system only if 
+											// the component signature of an entity matches the requirement components of the system
+
+	//void KillEntity(Entity entity);
+	//void AddSystem();
+	//void AddComponent();
+	//void RemoveComponent();
 };
 
 template <typename TComponent>
