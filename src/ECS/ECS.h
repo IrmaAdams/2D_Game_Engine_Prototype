@@ -67,8 +67,80 @@ public:
 	template <typename TComponent> void RequireComponent();
 };
 
-class Registry {
+// POOL CLASS
+// A pool is a vector (contiguous data) of objects of type T
 
+class IPool {						// base class IPool
+public:
+	virtual ~IPool() {}
+};
+
+template <typename T>
+class Pool : public IPool {
+private:
+	std::vector<T> data;
+
+
+public:
+	Pool(int size = 100) {
+		data.resize(size);
+	}
+	virtual ~Pool() = default;
+
+	bool isEmpty() {
+		return data.empty;
+	}
+
+	int GetSize() const{
+		return data.size();
+	}
+
+	void Resize(int n) {
+		data.resize(n);
+	}
+
+	void Clear() {
+		data.clear();
+	}
+
+	void Add(T object) {
+		data.push_back(object);
+	}
+
+	void Set(int index, T object) {
+		data[index] = object;
+	}
+
+	T& Get(int index) {
+		return static_cast<T&>(data[index]);
+	}
+
+	T& operator [](unsigned int index) {
+		return data[index];
+	}
+
+};
+
+// REGISTRY
+// The registry manages the creation and destruction of entities, as well as
+// adding systems and adding components to entities
+
+class Registry {
+private:
+	// Keeping track of how many entities were added to the scene
+	int numEntities = 0;
+
+	// Vector of component pools
+	// Each pool contains all the data for a certain component type
+	// [vector index = componentId], [pool index = entityId]
+	std::vector<IPool*> componentPools;			// default back to parent class for type
+
+public:
+	Entity CreateEntity();
+	void KillEntity(Entity entity);
+	void AddSystem();
+	void AddComponent();
+	void RemoveComponent();
 };
 
 template <typename TComponent>
