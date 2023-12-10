@@ -1,5 +1,8 @@
 #include "ECS.h"
 #include "../Logger.h"
+#include <algorithm>
+
+int IComponent::nextId = 0;
 
 int Entity::GetId() const {
 	return id;
@@ -15,9 +18,11 @@ void System::RemoveEntityFromSystem(Entity entity) {
 		return entity == other; //(using operator overloading)
 		}), entities.end());
 }
+
 std::vector<Entity> System::GetSystemEntities() const {
 	return entities;
 }
+
 const Signature& System::GetComponentSignature() const {
 	return componentSignature;
 }
@@ -30,7 +35,9 @@ Entity Registry::CreateEntity() {
 	// Flag new entity to be created before the next frame
 	Entity entity(entityId);
 	entitiesToBeAdded.insert(entity);
+
 	Logger::Log("Entity created with id = " + std::to_string(entityId));
+
 	return entity;
 
 }

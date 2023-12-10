@@ -2,11 +2,11 @@
 #define ECS_H
 
 #include <vector>
-#include<bitset>
+#include <bitset>
 #include <set>
 #include <unordered_map>
 #include <typeindex>
-
+#include <memory>
 
 const unsigned int MAX_COMPONENTS = 32;
 
@@ -23,7 +23,6 @@ protected:
 
 // used to assign a unique id to a component taype
 template <typename T>
-
 class Component: public IComponent {
 	// returns the unique id of Component<T>
 	static int GetId() {
@@ -37,7 +36,7 @@ private:
 	int id;
 
 public:
-	Entity(int id) : id(id) {};		// initialize member variables directly
+	Entity(int id): id(id) {};		// initialize member variables directly
 	Entity(const Entity& entity) = default;
 	int GetId() const;
 
@@ -60,7 +59,8 @@ private:
 
 public:
 	System() = default;
-	virtual ~System() = default;
+	//virtual ~System() = default;
+	~System() = default;
 
 	void AddEntityToSystem(Entity entity);
 	void RemoveEntityFromSystem(Entity entity);
@@ -74,7 +74,7 @@ public:
 // POOL CLASS
 // A pool is a vector (contiguous data) of objects of type T
 
-class IPool {						// base class IPool
+class IPool {						// base/parent class IPool
 public:
 	virtual ~IPool() {}
 };
@@ -84,15 +84,15 @@ class Pool : public IPool {
 private:
 	std::vector<T> data;
 
-
 public:
 	Pool(int size = 100) {
 		data.resize(size);
 	}
+
 	virtual ~Pool() = default;
 
-	bool isEmpty() {
-		return data.empty;
+	bool isEmpty() const{
+		return data.empty();
 	}
 
 	int GetSize() const{
@@ -134,11 +134,6 @@ private:
 	// Keeping track of how many entities were added to the scene
 	int numEntities = 0;
 
-	// Avoid creating or destroying entities in the middle of the game logic by flagging entities 
-	// to be added or removed in the next registry Update()
-	std::set<Entity> entitiesToBeAdded;		// Entities awaiting creation in the next Registry Update()
-	std::set<Entity> entitiesToBeKilled;	// Entities awaiting destruction in the next Registry Update()
-
 	// Vector of component pools
 	// Each pool contains all the data for a certain component type
 	// [vector index = component type id]
@@ -149,33 +144,88 @@ private:
 	// [Vector index = entity id]
 	std::vector<Signature> entityComponentSignatures;
 
-
 	// Map of active systems [index = system typeId]
-	// Unordered_map can be used since we do not need to keep the elements sored
+	// Unordered_map can be used since we do not need to keep the elements sorted
 	std::unordered_map<std::type_index, System*> systems;
+
+	// Avoid creating or destroying entities in the middle of the game logic by flagging entities 
+	// to be added or removed in the next registry Update()
+	std::set<Entity> entitiesToBeAdded;		// Entities awaiting creation in the next Registry Update()
+	std::set<Entity> entitiesToBeKilled;	// Entities awaiting destruction in the next Registry Update()
 
 public:
 	Registry() = default;
 
-	// Management of entities
+	// Process entities that are waiting to be added/killed
 	void Update();
+
+	// Entity Management
 	Entity CreateEntity();
 
-	//todo: AddComponent<T>();
+	// Component Management
+	template <typename TComponent, typename ...TArgs> void AddComponent(Entity entity, TArgs&& ...args);
+	template <typename TComponent> void RemoveComponent(Entity entity);
+	template <typename TComponent> bool HasComponent(Entity entity) const;
 	
-	void AddEntityToSystem(Entity entity);	// add entity to the list of entities inside the system only if 
-											// the component signature of an entity matches the requirement components of the system
-
-	//void KillEntity(Entity entity);
-	//void AddSystem();
-	//void AddComponent();
-	//void RemoveComponent();
+	
 };
+
+ // Implementing template functions in the header file
 
 template <typename TComponent>
 void System::RequireComponent() {
 	const auto componentId = Component<TComponent>::GetId();
 	componentSignature.set(componentId);
 }
+
+
+template <typename TComponent, typename ...TArgs> 
+void Registry::AddComponent(Entity entity, TArgs&& ...args) {
+	const auto componentId = Component<TComponent>::GetId();
+	const auto entityId = entity.GetId();
+
+	// if id > then resize
+	if (componentId >= componentPools.size()) {
+		componentPools.resize(componentId + 1, nullptr);
+	}
+
+	// if no position in component pool, create new pool
+	if (!componentPools[componentId]) {
+		Pool<TComponent>* newcomponentPool = new Pool<TComponent>();
+		componentPools[componentId] = newComponentPool;
+	}
+
+	// get component pool
+	Pool<TComponent>* componentPool = componentPools[componentId];
+
+	// if pool too small, resize
+	if (entityId >= componentPool->GetSize()) {
+		componentPool->Resize(numEntities);
+	}
+
+	// create component
+	TComponent newComponent(std::forward<TArgs>(args)...);
+
+	// set component pool position
+	componentPool->Set(entityId, newComponent);
+
+	// turn id signature on
+	entityComponentSignatures[entityId].set(componentId);
+}
+
+template <typename TComponent>
+void Registry::RemoveComponent(Entity entity) {
+	const auto componentId = Component<TComponent>::GetId();
+	const auto entityId = entity.GetId();
+	entityComponentSignatures[entityId].set(componentId, false);
+}
+
+template <typename TComponent>
+bool Registry::HasComponent(Entity entity) const {
+	const auto componentId = Component<TComponent>::GetId();
+	const auto entityId = entity.GetId();
+	return entityComponentSignatures[entityId].test(componentId);
+}
+
 
 #endif
