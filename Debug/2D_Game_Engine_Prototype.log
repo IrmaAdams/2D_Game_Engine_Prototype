@@ -1,11 +1,19 @@
 ﻿  Game.cpp
+D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\Systems\MovementSystem.h(23,49): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\Systems\MovementSystem.h(24,49): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
 D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(245,18): warning C4018: '>=': signed/unsigned mismatch
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(301,10): message : see reference to function template instantiation 'void Registry::AddComponent<TransformComponent,_Ty,_Ty,double>(Entity,_Ty &&,_Ty &&,double &&)' being compiled
+D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(303,10): message : see reference to function template instantiation 'void Registry::AddComponent<TransformComponent,_Ty,_Ty,double>(Entity,_Ty &&,_Ty &&,double &&)' being compiled
           with
           [
               _Ty=glm::vec2
           ]
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\Game.cpp(73,9): message : see reference to function template instantiation 'void Entity::AddComponent<TransformComponent,glm::vec2,glm::vec2,double>(glm::vec2 &&,glm::vec2 &&,double &&)' being compiled
-  Main.cpp
-  Generating Code...
+D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\Game.cpp(76,9): message : see reference to function template instantiation 'void Entity::AddComponent<TransformComponent,glm::vec2,glm::vec2,double>(glm::vec2 &&,glm::vec2 &&,double &&)' being compiled
   2D_Game_Engine_Prototype.vcxproj -> D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\Debug\2D_Game_Engine_Prototype.exe
