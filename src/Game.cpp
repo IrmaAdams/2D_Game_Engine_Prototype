@@ -8,10 +8,12 @@
 
 Game::Game() {
     isRunning = false;
+    registry = std::make_unique<Registry>();
     Logger::Log("Game constructor called!");
 }
 
 Game::~Game() {
+
     Logger::Log("Game destructor called!");
 }
 
@@ -64,11 +66,9 @@ void Game::ProcessInput() {
 
 
 void Game::Setup() {
-    // Entity tank = registry.CreateEntity();
-    // tank.AddComponent<TransformComponent>();
-    // tank.AddComponent<BoxColliderComponent>();
-    // tank.AddComponent<SpriteComponent>();
-    
+    Entity tank = registry->CreateEntity();
+    Entity truck = registry->CreateEntity();
+   
 }
 
 void Game::Update() {

@@ -1,11 +1,6 @@
 ﻿  ECS.cpp
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(195,33): error C3861: 'newComponentPool': identifier not found
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(166,57): message : This diagnostic occurred in the compiler generated function 'void Registry::AddComponent(Entity,TArgs &&...)'
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(195,33): error C2065: 'newComponentPool': undeclared identifier
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(166,57): message : This diagnostic occurred in the compiler generated function 'void Registry::AddComponent(Entity,TArgs &&...)'
+D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.cpp(41,15): warning C4018: '>=': signed/unsigned mismatch
   Game.cpp
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(195,33): error C3861: 'newComponentPool': identifier not found
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(166,57): message : This diagnostic occurred in the compiler generated function 'void Registry::AddComponent(Entity,TArgs &&...)'
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(195,33): error C2065: 'newComponentPool': undeclared identifier
-D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\src\ECS\ECS.h(166,57): message : This diagnostic occurred in the compiler generated function 'void Registry::AddComponent(Entity,TArgs &&...)'
+  Main.cpp
   Generating Code...
+  2D_Game_Engine_Prototype.vcxproj -> D:\Glyndwr\COM646\Prototype\2d_Engine_Prototype\Irma Prototype\2D_Game_Engine_Prototype\Debug\2D_Game_Engine_Prototype.exe
