@@ -34,6 +34,7 @@ Entity Registry::CreateEntity() {
 
 	// Flag new entity to be created before the next frame
 	Entity entity(entityId);
+	entity.registry = this;
 	entitiesToBeAdded.insert(entity);
 
 
