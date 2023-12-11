@@ -74,8 +74,8 @@ void Game::Setup() {
     registry->AddSystem<RenderSystem>();
 
     // Adding assets to the asset store
-    assetStore->AddTexture("tank-image", "./assets/images/tank-panther-right.png");
-    assetStore->AddTexture("truck-image", "./assets/images/truck-ford-right.png");
+    assetStore->AddTexture(renderer, "tank-image", "./assets/images/tank-panther-right.png");
+    assetStore->AddTexture(renderer, "truck-image", "./assets/images/truck-ford-right.png");
 
     // Create an entity & components for that entity
     Entity tank = registry->CreateEntity();
