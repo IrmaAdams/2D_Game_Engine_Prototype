@@ -99,21 +99,21 @@ void Game::LoadLevel(int level) {
 
             Entity tile = registry->CreateEntity();
             tile.AddComponent<TransformComponent>(glm::vec2(x * (tileScale * tileSize), y * (tileScale * tileSize)), glm::vec2(tileScale, tileScale), 0.0);
-            tile.AddComponent<SpriteComponent>("tilemap-image", tileSize, tileSize, srcRectX, srcRectY);
+            tile.AddComponent<SpriteComponent>("tilemap-image", tileSize, tileSize, 0, srcRectX, srcRectY);
         }
     }
 
     // Create an entity & components for that entity
-    Entity tank = registry->CreateEntity();
-    tank.AddComponent<TransformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
-    tank.AddComponent<RigidBodyComponent>(glm::vec2(40.0, 0.0));
-    tank.AddComponent<SpriteComponent>("enemy-character", 60, 80);
+    Entity enemyCharacter = registry->CreateEntity();
+    enemyCharacter.AddComponent<TransformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
+    enemyCharacter.AddComponent<RigidBodyComponent>(glm::vec2(30.0, 0.0));
+    enemyCharacter.AddComponent<SpriteComponent>("enemy-character", 60, 80, 2);
 
     // Create another entity & components for that entity
-    Entity truck = registry->CreateEntity();
-    truck.AddComponent<TransformComponent>(glm::vec2(50.0, 100.0), glm::vec2(1.0, 1.0), 0.0);
-    truck.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 50.0));
-    truck.AddComponent<SpriteComponent>("player-character", 60, 80);
+    Entity playerCharacter = registry->CreateEntity();
+    playerCharacter.AddComponent<TransformComponent>(glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0); 
+    playerCharacter.AddComponent<RigidBodyComponent>(glm::vec2(20.0, 0.0)); 
+    playerCharacter.AddComponent<SpriteComponent>("player-character", 60, 80, 1);
 
 }
 
