@@ -1,7 +1,10 @@
 #ifndef SPRITECOMPONENT_H
 #define SPRITECOMPONENT_H
 
+#include <string>
+
 struct SpriteComponent {
+	std::string assetId;
 	int width;
 	int height;
 
